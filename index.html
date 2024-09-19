@@ -25,7 +25,7 @@
   <div id="terminal"></div>
   <script>
   const term = new Terminal({
-  fontSize: 24 // Adjust this value as needed
+  fontSize: 20 // Adjust this value as needed
   });  
     
     
@@ -92,8 +92,11 @@
           case 'hello':
             term.write('Hello there!\r\n');
             break;
+          case 'social':
+            term.write('Instagram: @pablo_garcia_ferrer\r\n');
+            break;
           case 'help':
-            term.write('Available commands: hello, help, clear\r\n');
+            term.write('Available commands: \nhello \nhelp \nsocial \nclear\r\n');
             break;
           case 'clear':
             term.clear();
