@@ -89,29 +89,36 @@
       if (input) {
         // Basic command handling
         switch (input.toLowerCase()) {
+            
           case 'hello':
             term.write('Hello there!\r\n');
             break;
+            
           case 'social':
             term.write('Instagram: @pablo_garcia_ferrer\r\n');
             break;
+            
           case 'help':
             term.write('Available commands:\n');
             term.write('hello - Greet the user\r\n');
             term.write('social - Find contact info\r\n');
             term.write('help - Show this help menu\r\n');
             term.write('clear - Clear the terminal\r\n');
-
             break;
+
           case 'clear':
             term.clear();
+            term.write('\x1b[1;36mWelcome to the Terminal!\x1b[0m\r\n');
+            term.write('\x1b[1;37mType "help" for a list of commands.\x1b[0m\r\n');
             break; // Don't write prompt here
+            
           default:
             term.write(`Command not found: ${input}\r\n`);
         }
       }
       term.write(prompt); // Show prompt again after command handling
     }
+    
 
         // Refresh the page on F5 key press
     window.addEventListener('keydown', (event) => {
@@ -120,6 +127,8 @@
         location.reload(); // Refresh the page
       }
        });
+
+    
   </script>
 </body>
 </html>
