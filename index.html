@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" href="node_modules/@xterm/xterm/css/xterm.css" />
+  <script src="node_modules/@xterm/xterm/lib/xterm.js"></script>
+  <style>
+    #terminal {
+      width: 100%;
+      height: 100vh;
+      background-color: black;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+  <script>
+    const term = new Terminal();
+    term.open(document.getElementById('terminal'));
+
+    // Command history
+    const history = [];
+    let historyIndex = -1;
+    let currentInput = '';
+
+    // Write initial prompt
+    const prompt = 'visitor@website $ ';
+    term.write(prompt);
+
+    // Handle user input
+    term.onData(data => {
+      if (data === '\r') { // Enter key
+        term.write('\r\n');
+        handleCommand(currentInput.trim());
+        if (currentInput) {
+          history.push(currentInput); // Append to history
+        }
+        currentInput = '';
+        historyIndex = -1; // Reset history index on new command
+      } else if (data === '\u001B[A') { // Up arrow
+        if (historyIndex < history.length - 1) {
+          historyIndex++;
+          currentInput = history[history.length - 1 - historyIndex];
+          term.write(`\r\x1B[K${prompt}${currentInput}`); // Retain prompt
+        }
+      } else if (data === '\u001B[B') { // Down arrow
+        if (historyIndex > 0) {
+          historyIndex--;
+          currentInput = history[history.length - 1 - historyIndex] || '';
+          term.write(`\r\x1B[K${prompt}${currentInput}`); // Retain prompt
+        } else if (historyIndex === 0) {
+          historyIndex--;
+          currentInput = '';
+          term.write(`\r\x1B[K${prompt}`); // Retain prompt
+        }
+      } else if (data === '\u0008' || data === '\x7f') { // Backspace
+        if (currentInput.length > 0) {
+          currentInput = currentInput.slice(0, -1);
+          term.write('\b \b'); // Erase last character in terminal
+        }
+      } else {
+        currentInput += data; // Append the character to current input
+        term.write(data);
+      }
+    });
+
+    function handleCommand(input) {
+      if (input) {
+        // Basic command handling
+        switch (input.toLowerCase()) {
+          case 'hello':
+            term.write('Hello there!\r\n');
+            break;
+          case 'help':
+            term.write('Available commands: hello, help, clear\r\n');
+            break;
+          case 'clear':
+            term.clear();
+            break; // Don't write prompt here
+          default:
+            term.write(`Command not found: ${input}\r\n`);
+        }
+      }
+      term.write(prompt); // Show prompt again after command handling
+    }
+  </script>
+</body>
+</html>
