@@ -97,10 +97,12 @@
             break;
           case 'help':
             term.write('Available commands:\n');
-            term.write('hello\n');
-            term.write('social\n');
-            term.write('help\n');
-            term.write('clear\n');
+            term.write('Available commands:\r\n');
+            term.write('hello - Greet the user\r\n');
+            term.write('social - Find contact info\r\n');
+            term.write('help - Show this help menu\r\n');
+            term.write('clear - Clear the terminal\r\n');
+
             break;
           case 'clear':
             term.clear();
