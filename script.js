@@ -132,13 +132,11 @@ function handleCommand(input) {
 // Display help information
 function displayHelp() {
   const helpMessages = [
-    ' ',
     'Available commands:',
     'hello - Greet the user',
     'social - Find contact info',
     'help - Show this help menu',
     'clear - Clear the terminal',
-    ' ',
   ];
 
   helpMessages.reduce((promise, message) => {
