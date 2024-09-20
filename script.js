@@ -5,6 +5,10 @@ const term = new Terminal({
 
 term.open(document.getElementById('terminal'));
 
+// Focus the terminal after it opens
+term.focus();
+
+
 // Initial banner
 term.write('\x1b[1;36mWelcome to the Terminal!\x1b[0m\r\n');
 term.write('\x1b[1;37mType "help" for a list of commands.\x1b[0m\r\n');
