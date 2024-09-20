@@ -1,13 +1,16 @@
-// Initialize terminal
-const term = new Terminal({ 
+// Initialize terminal with custom cursor color and style
+const term = new Terminal({
+  fontSize: 20,
   cursorBlink: true,
-  cursorStyle: 'underline', // You can also use 'underline' or 'bar' or block
-  cursorColor: 'grey', // Change this to your desired color
-  fontSize: 20 });
+  cursorStyle: 'block',
+  cursorColor: 'red',
+});
+
 term.open(document.getElementById('terminal'));
 
 // Global typing speed (in milliseconds)
 const typingSpeed = 10;
+const fadeDuration = 2000; // Time in milliseconds for text to become fully solid
 
 // Focus the terminal after it opens
 window.onload = () => {
@@ -31,21 +34,34 @@ function displayWelcomeMessage() {
   });
 }
 
-// Function to "type" out text character by character
+// Function to "type" out text character by character with transparency effect
 function typeText(term, text, delay, callback) {
   let index = 0;
 
   const typeChar = () => {
     if (index < text.length) {
-      term.write(text.charAt(index));
+      const char = text.charAt(index);
+      term.write(char);  // Write the character normally to the terminal
+
+      // Apply a transparent fade-in effect by re-writing it
+      fadeInLastCharacter();
+
       index++;
       setTimeout(typeChar, delay);
     } else if (callback) {
       callback();
     }
   };
-  
+
   typeChar();
+}
+
+// Function to fade in the last character
+function fadeInLastCharacter() {
+  const lastCharElement = document.querySelector('#terminal .xterm-rows > :last-child');
+  if (lastCharElement) {
+    lastCharElement.classList.add('fade-in'); // Add a fade-in class to the last character
+  }
 }
 
 // Handle user input
@@ -107,6 +123,7 @@ function handleBackspace() {
 function handleDefaultInput(data) {
   currentInput += data;
   term.write(data);
+  fadeInLastCharacter();
 }
 
 // Command handler
@@ -140,7 +157,9 @@ function displayHelp() {
     'help - Show this help menu',
     'clear - Clear the terminal',
   ];
+
   let index = 0;
+
   function typeNextMessage() {
     if (index < helpMessages.length) {
       typeText(term, helpMessages[index] + '\r\n', typingSpeed, () => {
@@ -151,6 +170,7 @@ function displayHelp() {
       term.write(prompt); // Re-display the prompt after the help messages
     }
   }
+
   typeNextMessage();
 }
 
