@@ -1,5 +1,7 @@
 // Initialize terminal
-const term = new Terminal({ fontSize: 20 });
+const term = new Terminal({ 
+  cursorBlink: true,
+  fontSize: 20 });
 term.open(document.getElementById('terminal'));
 
 // Global typing speed (in milliseconds)
