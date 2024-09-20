@@ -18,16 +18,11 @@ html, body {
   color: white;
 }
 
-.fade-in {
-  opacity: 0; /* Start transparent */
-  animation: fadeIn 2s forwards; /* Gradually become opaque over 2 seconds */
+.fade-in-char {
+  opacity: 0;
+  transition: opacity 2s ease-in-out; /* Fade effect */
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.fade-in-char.visible {
+  opacity: 1;
 }
