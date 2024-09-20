@@ -138,10 +138,18 @@ function displayHelp() {
     'help - Show this help menu',
     'clear - Clear the terminal',
   ];
-
-  helpMessages.reduce((promise, message) => {
-    return promise.then(() => typeText(term, message + '\r\n', typingSpeed));
-  }, Promise.resolve()).then(() => term.write(prompt));
+  let index = 0;
+  function typeNextMessage() {
+    if (index < helpMessages.length) {
+      typeText(term, helpMessages[index] + '\r\n', typingSpeed, () => {
+        index++;
+        typeNextMessage(); // Call the next message after the current one is typed
+      });
+    } else {
+      term.write(prompt); // Re-display the prompt after the help messages
+    }
+  }
+  typeNextMessage();
 }
 
 // Clear the terminal
