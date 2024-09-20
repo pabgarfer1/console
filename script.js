@@ -1,6 +1,8 @@
 // Initialize terminal
 const term = new Terminal({ 
   cursorBlink: true,
+  cursorStyle: 'underline', // You can also use 'underline' or 'bar' or block
+  cursorColor: 'grey', // Change this to your desired color
   fontSize: 20 });
 term.open(document.getElementById('terminal'));
 
