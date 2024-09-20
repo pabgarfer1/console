@@ -7,20 +7,36 @@ term.open(document.getElementById('terminal'));
 
 // Focus the terminal after it opens
 window.onload = function() {
-  term.focus();
+  setTimeout(() => {
+    term.focus();
+    typeText(term, '\x1b[1;36mWelcome to the Terminal!\x1b[0m\r\n', 50, () => {
+      typeText(term, '\x1b[1;37mType "help" for a list of commands.\x1b[0m\r\n', 50, () => {
+        typeText(term, 'visitor@website $ ', 50);
+      });
+    });
+  }, 100);
 };
-
-
-// Initial banner
-term.write('\x1b[1;36mWelcome to the Terminal!\x1b[0m\r\n');
-term.write('\x1b[1;37mType "help" for a list of commands.\x1b[0m\r\n');
 
 const history = [];
 let historyIndex = -1;
 let currentInput = '';
 
 const prompt = 'visitor@website $ ';
-term.write(prompt);
+
+// Function to "type" out text character by character
+function typeText(term, text, delay, callback) {
+  let index = 0;
+  function typeChar() {
+    if (index < text.length) {
+      term.write(text.charAt(index));
+      index++;
+      setTimeout(typeChar, delay); // Delay between each character
+    } else if (callback) {
+      callback(); // Call the callback function after typing is done
+    }
+  }
+  typeChar();
+}
 
 // Handle user input
 term.onData(data => {
@@ -77,8 +93,11 @@ function handleCommand(input) {
         break;
       case 'clear':
         term.clear();
-        term.write('\x1b[1;36mWelcome to the Terminal!\x1b[0m\r\n');
-        term.write('\x1b[1;37mType "help" for a list of commands.\x1b[0m\r\n');
+        typeText(term, '\x1b[1;36mWelcome to the Terminal!\x1b[0m\r\n', 50, () => {
+          typeText(term, '\x1b[1;37mType "help" for a list of commands.\x1b[0m\r\n', 50, () => {
+            term.write(prompt);
+          });
+        });
         break;
       default:
         term.write(`Command not found: ${input}\r\n`);
