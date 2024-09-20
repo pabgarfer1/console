@@ -1,0 +1,19 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Prevent any scrolling */
+}
+
+#terminal {
+  width: 80%;
+  height: 80vh;
+  max-height: 100vh;
+  background-color: black;
+  color: white;
+}
