@@ -43,10 +43,20 @@ function typeText(term, text, delay, callback) {
   const typeChar = () => {
     if (index < text.length) {
       const char = text.charAt(index);
-      term.write(char);  // Write the character normally to the terminal
-
-      // Apply a transparent fade-in effect by re-writing it
-      fadeInLastCharacter();
+      // Write the character normally to the terminal
+      term.write(char);
+      
+      // Get the latest character element from the DOM
+      const terminalRows = document.querySelectorAll('.xterm-rows div');
+      const lastRow = terminalRows[terminalRows.length - 1];
+      if (lastRow) {
+        const lastChar = lastRow.lastElementChild;
+        if (lastChar) {
+          lastChar.classList.add('fade-in-char');
+          // Make it fully visible after a delay
+          setTimeout(() => lastChar.classList.add('visible'), 10);
+        }
+      }
 
       index++;
       setTimeout(typeChar, delay);
@@ -56,14 +66,6 @@ function typeText(term, text, delay, callback) {
   };
 
   typeChar();
-}
-
-// Function to fade in the last character
-function fadeInLastCharacter() {
-  const lastCharElement = document.querySelector('#terminal .xterm-rows > :last-child');
-  if (lastCharElement) {
-    lastCharElement.classList.add('fade-in'); // Add a fade-in class to the last character
-  }
 }
 
 // Handle user input
