@@ -12,6 +12,9 @@ term.open(document.getElementById('terminal'));
 const typingSpeed = 10;
 const fadeDuration = 2000; // Time in milliseconds for text to become fully solid
 
+// Custom prompt color (Green in this case)
+const prompt = '\x1b[32mvisitor@website $ \x1b[0m'; // Green prompt
+
 // Focus the terminal after it opens
 window.onload = () => {
   setTimeout(() => {
@@ -23,7 +26,6 @@ window.onload = () => {
 const history = [];
 let historyIndex = -1;
 let currentInput = '';
-const prompt = 'visitor@website $ ';
 
 // Display the welcome message
 function displayWelcomeMessage() {
