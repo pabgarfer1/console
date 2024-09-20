@@ -5,13 +5,16 @@ const term = new Terminal({
 
 term.open(document.getElementById('terminal'));
 
+// Define a global typing speed (in milliseconds)
+const typingSpeed = 10; // Adjust this value to change typing speed
+
 // Focus the terminal after it opens
 window.onload = function() {
   setTimeout(() => {
     term.focus();
-    typeText(term, '\x1b[1;36mWelcome to the Terminal!\x1b[0m\r\n', 50, () => {
-      typeText(term, '\x1b[1;37mType "help" for a list of commands.\x1b[0m\r\n', 50, () => {
-        typeText(term, 'visitor@website $ ', 50);
+    typeText(term, '\x1b[1;36mWelcome to the Terminal!\x1b[0m\r\n', typingSpeed, () => {
+      typeText(term, '\x1b[1;37mType "help" for a list of commands.\x1b[0m\r\n', typingSpeed, () => {
+        typeText(term, 'visitor@website $ ', typingSpeed);
       });
     });
   }, 100);
@@ -79,17 +82,17 @@ function handleCommand(input) {
   if (input) {
     switch (input.toLowerCase()) {
       case 'hello':
-        typeText(term, 'Hello there!\r\n', 50, () => term.write(prompt));
+        typeText(term, 'Hello there!\r\n', typingSpeed, () => term.write(prompt));
         break;
       case 'social':
-        typeText(term, 'Instagram: @pablo_garcia_ferrer\r\n', 50, () => term.write(prompt));
+        typeText(term, 'Instagram: @pablo_garcia_ferrer\r\n', typingSpeed, () => term.write(prompt));
         break;
       case 'help':
-        typeText(term, 'Available commands:\r\n', 50, () => {
-          typeText(term, 'hello - Greet the user\r\n', 50, () => {
-            typeText(term, 'social - Find contact info\r\n', 50, () => {
-              typeText(term, 'help - Show this help menu\r\n', 50, () => {
-                typeText(term, 'clear - Clear the terminal\r\n', 50, () => {
+        typeText(term, 'Available commands:\r\n', typingSpeed, () => {
+          typeText(term, 'hello - Greet the user\r\n', typingSpeed, () => {
+            typeText(term, 'social - Find contact info\r\n', typingSpeed, () => {
+              typeText(term, 'help - Show this help menu\r\n', typingSpeed, () => {
+                typeText(term, 'clear - Clear the terminal\r\n', typingSpeed, () => {
                   term.write(prompt);
                 });
               });
@@ -99,14 +102,14 @@ function handleCommand(input) {
         break;
       case 'clear':
         term.clear();
-        typeText(term, '\x1b[1;36mWelcome to the Terminal!\x1b[0m\r\n', 50, () => {
-          typeText(term, '\x1b[1;37mType "help" for a list of commands.\x1b[0m\r\n', 50, () => {
-            typeText(term, prompt, 50);
+        typeText(term, '\x1b[1;36mWelcome to the Terminal!\x1b[0m\r\n', typingSpeed, () => {
+          typeText(term, '\x1b[1;37mType "help" for a list of commands.\x1b[0m\r\n', typingSpeed, () => {
+            typeText(term, prompt, typingSpeed);
           });
         });
         break;
       default:
-        typeText(term, `Command not found: ${input}\r\n`, 50, () => term.write(prompt));
+        typeText(term, `Command not found: ${input}\r\n`, typingSpeed, () => term.write(prompt));
     }
   } else {
     term.write(prompt); // Show prompt again after command handling
