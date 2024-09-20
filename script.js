@@ -11,7 +11,7 @@ window.onload = function() {
     term.focus();
     typeText(term, '\x1b[1;36mWelcome to the Terminal!\x1b[0m\r\n', 50, () => {
       typeText(term, '\x1b[1;37mType "help" for a list of commands.\x1b[0m\r\n', 50, () => {
-        typeText(term, 'visitor@website $ ', 50);
+        typeText(term, 'visitor@website $ ', 500);
       });
     });
   }, 100);
