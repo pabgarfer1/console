@@ -6,7 +6,9 @@ const term = new Terminal({
 term.open(document.getElementById('terminal'));
 
 // Focus the terminal after it opens
-term.focus();
+window.onload = function() {
+  term.focus();
+};
 
 
 // Initial banner
