@@ -17,3 +17,17 @@ html, body {
   background-color: black;
   color: white;
 }
+
+.fade-in {
+  opacity: 0; /* Start transparent */
+  animation: fadeIn 2s forwards; /* Gradually become opaque over 2 seconds */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
